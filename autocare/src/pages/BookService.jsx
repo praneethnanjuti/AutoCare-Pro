@@ -79,15 +79,7 @@ function BookService() {
 
         {/* Service Image */}
 
-        <img
-          src={
-            service.image && service.image !== ""
-              ? service.image
-              : "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=900"
-          }
-          alt={service.serviceName}
-          className="rounded-xl mb-8 w-full h-72 object-cover"
-        />
+        
 
         {/* Service Details */}
 
