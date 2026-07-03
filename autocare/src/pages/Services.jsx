@@ -1,6 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
+import carWash from "../assets/car-wash.jpg";
+import oilChange from "../assets/oil-change.jpg";
+import engineRepair from "../assets/engine-repair.jpg";
+import wheelAlignment from "../assets/wheel-alignment.jpg";
+
+const serviceImages = {
+  "Car Wash": carWash,
+  "Oil Change": oilChange,
+  "Engine Repair": engineRepair,
+  "Wheel Alignment": wheelAlignment,
+};
 
 function Services() {
   const navigate = useNavigate();
@@ -57,13 +68,12 @@ function Services() {
             >
 
               <img
-                src={
-                  service.image && service.image !== ""
-                    ? service.image
-                    : "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=900"
-                }
-                alt={service.serviceName}
-                className="h-56 w-full object-cover"
+              src={
+                serviceImages[service.serviceName] ||
+                "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=900"
+              }
+              alt={service.serviceName}
+              className="h-56 w-full object-cover"
               />
 
               <div className="p-6">
