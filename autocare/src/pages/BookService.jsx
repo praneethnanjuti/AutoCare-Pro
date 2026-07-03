@@ -20,13 +20,9 @@ function BookService() {
   useEffect(() => {
     const fetchService = async () => {
       try {
-        const response = await API.get("/services");
-
-        const selected = response.data.services.find(
-          (item) => item._id === id
-        );
-
-        setService(selected);
+        const response = await API.get(`/services/${id}`);
+        setService(response.data.service);
+        
       } catch (error) {
         console.log(error);
       }
