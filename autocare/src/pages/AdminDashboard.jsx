@@ -33,7 +33,7 @@ function AdminDashboard() {
 
   const fetchBookings = async () => {
   try {
-    const res = await API.get("/bookings/my-bookings");
+    const res = await API.get("/bookings");
     setBookings(res.data.bookings);
   } catch (error) {
     console.log(error);

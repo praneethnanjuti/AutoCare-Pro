@@ -29,7 +29,7 @@ const addService = async (req, res) => {
     });
 
   } catch (error) {
-    console.error(error);
+    console.error("Add Service Error:", error);
 
     res.status(500).json({
       success: false,
@@ -43,45 +43,7 @@ const addService = async (req, res) => {
 // ==========================
 const getServices = async (req, res) => {
   try {
-    let services = await Service.find();
-
-    // Return default services if database is empty
-    if (services.length === 0) {
-      services = [
-        {
-          _id: "1",
-          serviceName: "Car Wash",
-          description: "Premium exterior & interior cleaning",
-          price: 499,
-          duration: "1 hour",
-          image: "https://images.unsplash.com/photo-1607861716497-e65ab29fc7ac?w=900",
-        },
-        {
-          _id: "2",
-          serviceName: "Oil Change",
-          description: "Engine oil replacement with quality oils",
-          price: 999,
-          duration: "45 mins",
-          image: "https://images.unsplash.com/photo-1486262715619-w=900",
-        },
-        {
-          _id: "3",
-          serviceName: "Engine Repair",
-          description: "Professional engine diagnostics & repair",
-          price: 4999,
-          duration: "2 Days",
-          image: "https://images.unsplash.com/photo-1613214150384-5c88d0f74f4d?w=900",
-        },
-        {
-          _id: "4",
-          serviceName: "Wheel Alignment",
-          description: "Improve safety and tire life",
-          price: 799,
-          duration: "30 mins",
-          image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900",
-        },
-      ];
-    }
+    const services = await Service.find().sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,
@@ -90,7 +52,7 @@ const getServices = async (req, res) => {
     });
 
   } catch (error) {
-    console.error(error);
+    console.error("Get Services Error:", error);
 
     res.status(500).json({
       success: false,
@@ -109,7 +71,7 @@ const getServiceById = async (req, res) => {
     if (!service) {
       return res.status(404).json({
         success: false,
-        message: "Service not found",
+        message: "Service Not Found",
       });
     }
 
@@ -119,7 +81,44 @@ const getServiceById = async (req, res) => {
     });
 
   } catch (error) {
-    console.error(error);
+    console.error("Get Service Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// ==========================
+// Update Service
+// ==========================
+const updateService = async (req, res) => {
+  try {
+    const service = await Service.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    if (!service) {
+      return res.status(404).json({
+        success: false,
+        message: "Service Not Found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Service Updated Successfully",
+      service,
+    });
+
+  } catch (error) {
+    console.error("Update Service Error:", error);
 
     res.status(500).json({
       success: false,
@@ -150,7 +149,7 @@ const deleteService = async (req, res) => {
     });
 
   } catch (error) {
-    console.error(error);
+    console.error("Delete Service Error:", error);
 
     res.status(500).json({
       success: false,
@@ -163,5 +162,6 @@ module.exports = {
   addService,
   getServices,
   getServiceById,
+  updateService,
   deleteService,
 };
