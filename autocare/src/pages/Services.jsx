@@ -67,11 +67,8 @@ function Services() {
               className="bg-slate-900 rounded-2xl shadow-xl overflow-hidden hover:scale-105 duration-300"
             >
 
-              <img
-              src={
-                serviceImages[service.serviceName] ||
-                "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=900"
-              }
+              <img 
+              src={service.image}
               alt={service.serviceName}
               className="h-56 w-full object-cover"
               />
